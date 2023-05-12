@@ -1,0 +1,24 @@
+import math
+a=math.inf
+Points=[0,a,a,a,a,a]
+Marks=[0,0,0,0,0,0]
+Matrix=[[ 0, 7, 9, a, a,14],
+         [ 7, 0,10,15, a, a],
+         [ 9,10, 0,11, a, 2],
+         [ a,15,11, 0, 6, a],
+         [ a, a, a, 6, 0, 9],
+         [14, a, 2, a, 9, 0]]
+for i in range(len(Points)):
+    mn=a
+    numb=-1
+    for t in range(len(Marks)):
+        if mn>Points[t] and Marks[t]==0:
+            mn=Points[t]
+            numb=t
+    for j in range(len(Points)):
+        if Marks[j]==0:Points[j]=min(Points[j],mn+Matrix[numb][j])
+    Marks[numb]=1
+print(Points)
+
+       
+        
