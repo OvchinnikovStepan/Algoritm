@@ -1,0 +1,14 @@
+import math
+a=math.inf
+V= [[ 0,10,18, 8, a, a],
+    [10, 0,16, 9,21, a],
+    [ a,16, 0, a, a,15],
+    [ 7, 9,25, 0, a,12],
+    [ a, a, a, a, 0,23],
+    [ a, a,15, a,23, 0]]
+for t in range(len(V)):
+    for i in range(len(V)):
+        for j in range(len(V)):
+            V[i][j]=min(V[i][t]+V[t][j],V[i][j])
+for i in range(len(V)):
+    print(V[i])
