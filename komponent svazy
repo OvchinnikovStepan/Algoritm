@@ -1,0 +1,37 @@
+namespace kakoi_to_algoritm
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] Matrix = new int[5, 5] { {0,1,1,0,0}, {1,0,1,0,0 }, {1,1,0,0,0 }, {0,0,0,0,1 }, {0,0,0,1,0 } };
+            Queue<int> q = new Queue<int>();
+            int[] Numbers = new int[]  { 0, 0, 0, 0, 0  };
+            int count = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (Numbers[i]==0 )
+                {
+                    q.Enqueue(i);
+                    while(q.Count > 0)
+                    {
+                        int a=q.Peek();
+                        Numbers[a]++;
+                        for(int j = 0; j < 5;j++)
+                        {
+                            if ((Matrix[a, j] != 0) && (Numbers[j]==0))
+                            {
+                                q.Enqueue(j);
+                                Numbers[j]++;
+                            }
+                        }
+                        q.Dequeue();
+                    }
+                    count++;
+                }
+            }
+            Console.WriteLine(count);
+        }
+        
+    }
+}
