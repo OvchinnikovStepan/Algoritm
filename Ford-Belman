@@ -1,0 +1,26 @@
+import math
+a=math.inf
+V=[[ 0, 6, a, a, 7],
+   [ a, 0, 5,-4, 8],
+   [ a,-2, 0, a, a],
+   [ 2, a, 7, 0, a],
+   [ a, a,-3, 9, 0]]
+L=[a,a,a,a,a]
+M=[0,0,0,0,0]
+r=int(input())
+L[r]=0
+M[r]=1
+while (True):
+    for i in range(len(V)):
+        if L[i]>(V[r][i]+L[r]):
+            L[i]=V[r][i]+L[r]
+            M[i]=1
+    M[r]=0
+    if sum(M)==0:
+        break
+    else:
+        for t in range(len(M)):
+            if M[t]==1:
+                r=t
+                break
+print(L)
