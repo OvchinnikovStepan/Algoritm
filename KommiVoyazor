@@ -1,27 +1,68 @@
-import itertools
+import math
+a=math.inf
+V=[[ a,12,22,28,32],
+   [12, a,10,40,20],
+   [22,10, a,50,10],
+   [28,27,17, a,27],
+   [32,20,10,60, a]]
+count=0
+
+while(True):
+    for i in range(len(V)):
+        mn=a
+        for j in range(len(V)):
+            if V[i][j]>=0:
+                mn=min(mn,V[i][j])
+        count+=mn
+        for j in range(len(V[i])):
+            V[i][j]-=mn
+
+    for i in range(len(V)):
+        mn=a
+        for j in range(len(V)):
+            if V[j][i]>=0:
+                mn=min(mn,V[j][i])
+        count+=mn
+        for j in range(len(V)):V[j][i]-=mn
 
 
-def tsp(cities):
-    all_permutations = itertools.permutations(cities)
+    V0=[[0 for i in range(len(V))]for j in range (len(V))]
 
-    shortest_distance = float("inf")
+    for i in range(len(V)):
+        for j in range(len(V)):
+            if V[i][j]==0:
+                mi=a
+                mj=a
+                for t in range(len(V)):
+                    if (t!=j):
+                        mi=min(mi,V[i][t])
+                for k in range(len(V)):
+                    if (k!=i):
+                        mj=min(mj,V[k][j])
+                mo=mi+mj
+                if mo==a:
+                    print(count)
+                    exit()
+                else: V0[i][j]=mo
+    mxx=0
+    for i in range(len(V)):
+        mxx=max(mxx,max(V0[i]))
+    bob=1
+    for i in range(len(V0)):
+        for j in range(len(V0)):
+            if V0[i][j]==mxx:
+                for t in range(len(V)):V[t].pop(j)
+                V.pop(i)
+                bob=0
+                break
+        if bob==0:break
 
-    for permutation in all_permutations:
-        distance = 0
-        for i in range(len(permutation) - 1):
-            distance += cities[permutation[i]][permutation[i + 1]]
-
-        shortest_distance = min(shortest_distance, distance)
-        #print(shortest_distance)
-
-    return shortest_distance
-
-
-cities = {
-    "A": {"B": 6, "C": 4, "D": 8, "E": 7},
-    "B": {"A": 6, "C": 7, "D": 11, "E": 7},
-    "C": {"A": 4, "B": 7, "D": 4, "E": 3},
-    "D": {"A": 8, "B": 11, "C": 4, "E": 5},
-    "E": {"A": 7, "B": 7, "C": 3, "D": 5}
-}
-print(tsp(cities))
+    for i in range(len(V)):
+        if max(V[i])!=a:
+            for j in range(len(V)):
+                pip=0
+                for t in range(len(V)):
+                     pip+=V[t][j]
+                if pip!=a:
+                    V[i][j]=a
+        
